@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fake Currency Detection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page">
+    <div class="container" style="max-width:720px; grid-template-columns: 1fr;">
+      <div class="panel">
+        <div class="header">
+          <div class="logo">💰</div>
+          <div>
+            <h1>Fake Currency Detection</h1>
+            <div class="small-muted">Upload a note image and check whether it’s real or fake.</div>
+          </div>
+        </div>
+
+        <form id="uploadForm" action="/predict" method="post" enctype="multipart/form-data" class="upload-form">
+          <div class="upload-box">
+            <div class="file-area">
+              <label class="custom-file" for="fileInput">Choose Image</label>
+              <input id="fileInput" type="file" name="file" accept="image/*" />
+              <div class="file-name" id="fileName">No file chosen</div>
+            </div>
+            <div>
+              <button class="btn" id="submitBtn" type="submit">Check Currency</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="preview">
+          {% if prediction %}
+          <div class="result-card">
+            <div>
+              <p class="result-title">Prediction Result</p>
+
+              {% if prediction == 'Real Currency' %}
+                <div class="badge real">✅ Real Currency</div>
+              {% elif prediction == 'Fake Currency' %}
+                <div class="badge fake">❌ Fake Currency</div>
+              {% else %}
+                <div class="badge fake">{{ prediction }}</div>
+              {% endif %}
+
+            </div>
+
+            <div class="image-frame" style="margin-top:14px;">
+              <img src="{{ img_path }}" alt="Uploaded image" id="resultImage">
+            </div>
+          </div>
+          {% else %}
+          <div class="result-card">
+            <p class="result-title">No prediction yet</p>
+            <div class="small-muted">Select an image to preview before uploading.</div>
+            <div class="image-frame" style="margin-top:14px;">
+              <img id="previewImg" src="{{ url_for('static', filename='placeholder.png') }}" alt="Preview">
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spinner -->
+  <div id="spinnerOverlay" class="spinner-wrap" style="display:none;">
+    <div class="spinner"></div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const fileName = document.getElementById('fileName');
+    const previewImg = document.getElementById('previewImg');
+    const submitBtn = document.getElementById('submitBtn');
+    const uploadForm = document.getElementById('uploadForm');
+    const spinnerOverlay = document.getElementById('spinnerOverlay');
+
+    fileInput.addEventListener('change', (e) => {
+      const f = e.target.files[0];
+      if (!f) {
+        fileName.textContent = "No file chosen";
+        return;
+      }
+      fileName.textContent = f.name;
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        if (previewImg) previewImg.src = ev.target.result;
+      }
+      reader.readAsDataURL(f);
+    });
+
+    uploadForm.addEventListener('submit', (e) => {
+      if (!fileInput.files.length) {
+        e.preventDefault();
+        alert("Please choose an image file first.");
+        return;
+      }
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Analyzing...";
+      spinnerOverlay.style.display = 'flex';
+    });
+  </script>
+</body>
+</html>
