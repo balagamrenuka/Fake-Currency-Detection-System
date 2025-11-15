@@ -1,0 +1,267 @@
+/* ========== style.css ========== */
+/* Modern, clean UI for Fake Currency Detection app */
+
+/* Import font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+:root{
+    --bg-1: #f4f7fb;
+    --card: #ffffff;
+    --muted: #6b7280;
+    --accent: #10b981;    /* green */
+    --danger: #ef4444;    /* red */
+    --accent-2: #6366f1;  /* purple-blue */
+    --glass: rgba(255,255,255,0.7);
+    --shadow: 0 10px 30px rgba(20,20,40,0.08);
+}
+
+*{box-sizing: border-box}
+html,body{
+    height:100%;
+    margin:0;
+    font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, #e6f7ff 0%, #ffffff 50%);
+    color: #111827;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+/* Page wrapper */
+.page {
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:48px 20px;
+}
+
+/* Center column */
+.container {
+    width:100%;
+    max-width:980px;
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap:28px;
+    align-items:start;
+}
+
+/* Left panel (main) */
+.panel {
+    background: var(--card);
+    border-radius:16px;
+    padding:24px;
+    box-shadow: var(--shadow);
+}
+
+/* Right panel (metrics / info) */
+.side {
+    background: linear-gradient(180deg, #ffffff, #fbfdff);
+    border-radius:16px;
+    padding:22px;
+    box-shadow: var(--shadow);
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+/* Header */
+.header {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+}
+.logo {
+    width:44px;
+    height:44px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,var(--accent), var(--accent-2));
+    color:white;
+    font-weight:700;
+    box-shadow: 0 6px 18px rgba(99,102,241,0.18);
+    flex:0 0 44px;
+}
+.header h1 {
+    font-size:20px;
+    margin:0;
+    font-weight:600;
+}
+
+/* Upload box */
+.upload-box {
+    border: 1px dashed #e6e9ef;
+    border-radius:12px;
+    padding:18px;
+    display:flex;
+    gap:16px;
+    align-items:center;
+    justify-content:space-between;
+    transition:all .18s ease;
+    background: linear-gradient(180deg, rgba(16,185,129,0.02), transparent);
+}
+.upload-box:hover{
+    border-color:#c7e6dc;
+    transform:translateY(-2px);
+}
+
+/* File input - custom button look */
+.file-area {
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+input[type=file]{
+    display:none;
+}
+.custom-file {
+    display:inline-block;
+    padding:10px 14px;
+    background:linear-gradient(180deg,#10b981,#059669);
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow: 0 6px 18px rgba(16,185,129,0.18);
+}
+.file-name {
+    color:var(--muted);
+    font-size:14px;
+    max-width:260px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+/* Submit button */
+.btn {
+    padding:10px 20px;
+    border-radius:10px;
+    background:linear-gradient(180deg,#2563eb,#4f46e5);
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow: 0 8px 24px rgba(59,130,246,0.12);
+    transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn:active{ transform:translateY(1px) }
+.btn:disabled{
+    opacity:0.7; cursor:default; transform:none;
+}
+
+/* Preview area - where image & prediction shows */
+.preview {
+    margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    align-items:center;
+}
+
+.result-card {
+    width:100%;
+    background: linear-gradient(180deg, #ffffff, #fbfdff);
+    border-radius:12px;
+    padding:18px;
+    box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+    text-align:center;
+}
+
+.result-title{
+    font-weight:700;
+    font-size:18px;
+    margin:0;
+    color:#0f172a;
+}
+
+/* badges for REAL / FAKE */
+.badge {
+    display:inline-block;
+    padding:8px 12px;
+    border-radius:999px;
+    font-weight:700;
+    margin-top:8px;
+    font-size:14px;
+}
+.badge.real{
+    background:linear-gradient(90deg,#ecfdf5,#bbf7d0);
+    color:#065f46;
+    border:1px solid rgba(16,185,129,0.12);
+}
+.badge.fake{
+    background:linear-gradient(90deg,#fff1f2,#fecaca);
+    color:#7f1d1d;
+    border:1px solid rgba(239,68,68,0.08);
+}
+
+/* image frame */
+.image-frame{
+    width:100%;
+    border-radius:10px;
+    overflow:hidden;
+    background:#f3f4f6;
+    padding:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.image-frame img{
+    max-width:100%;
+    max-height:320px;
+    object-fit:contain;
+    display:block;
+    border-radius:6px;
+}
+
+/* metrics card on right side */
+.metrics-card{
+    background: linear-gradient(180deg,#ffffff,#fcfeff);
+    border-radius:12px;
+    padding:16px;
+    box-shadow: 0 8px 28px rgba(14,18,31,0.04);
+}
+.metrics-card h3{ margin:0 0 10px 0; font-size:16px; color:#111827; }
+.metrics-list{ list-style:none; padding:0; margin:0; display:grid; gap:10px; }
+.metrics-list li{
+    background:#fbfbfe; border-radius:10px; padding:10px;
+    display:flex; justify-content:space-between; align-items:center;
+    border:1px solid #f1f5f9;
+}
+.metric-name{ color:#374151; font-weight:600; }
+.metric-value{ color:#0f172a; font-weight:700; }
+
+/* small helpers */
+.small-muted{ color:var(--muted); font-size:13px; margin-top:6px; text-align:center; }
+
+/* loading spinner overlay */
+.spinner-wrap{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(15,23,42,0.22);
+    z-index:9999;
+}
+.spinner {
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    border:6px solid rgba(255,255,255,0.12);
+    border-top-color: #4f46e5;
+    animation:spin 0.9s linear infinite;
+    box-shadow:0 6px 20px rgba(79,70,229,0.18);
+}
+@keyframes spin{ to{ transform:rotate(360deg) } }
+
+/* Responsive */
+@media (max-width:980px){
+    .container{ grid-template-columns: 1fr; padding:8px; gap:18px; }
+    .side{ order:2 }
+    .panel{ order:1 }
+}
